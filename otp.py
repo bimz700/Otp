@@ -421,7 +421,7 @@ def hapus_sesi_otp():
 def kontol_sinyal(sig, frame):
     return
 
-def spam_countdown(waktu_kirim, detik=120):
+def spam_countdown(waktu_kirim, detik=5):
     def handler(sig, frame):
         raise KeyboardInterrupt
     signal.signal(signal.SIGINT, handler)
@@ -690,15 +690,15 @@ def spam_otp_main():
         sesi = baca_sesi()
         if sesi and sesi.get("nomor") == nomor:
             waktu_kirim = sesi.get("waktu_kirim")
-            sisa = 120 - int(time.time() - waktu_kirim)
+            sisa = 5 - int(time.time() - waktu_kirim)
             if sisa > 0:
-                spam_countdown(waktu_kirim, 120)
+                spam_countdown(waktu_kirim, 5)
 
         while True:
             mulai_spam(nomor)
             waktu_kirim = time.time()
             simpan_sesi(nomor, waktu_kirim)
-            spam_countdown(waktu_kirim, 120)
+            spam_countdown(waktu_kirim, 5)
             hapus_sesi_otp()
 
     except KeyboardInterrupt:
